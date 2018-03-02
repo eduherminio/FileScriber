@@ -13,7 +13,14 @@ namespace FileScriber
     {
         static public void Clear(string path)
         {
-            File.Delete(path);
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Print.WriteLine(e.Message);
+            }
         }
 
         static public void NextLine(string path)
