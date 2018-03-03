@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>FileScriber</Title>
     <PackageId>FileScriber</PackageId>
-    <Version>0.1.0-alpha</Version>
+    <Version>0.2.0-alpha</Version>
     <PackageTags>FileScriber, TextWriter, TextWriter, File, Scriber, Text, txt, Write, Writer</PackageTags>
     <Tags>$(PackageTags)</Tags>
     <Authors>Eduardo Cáceres</Authors>
