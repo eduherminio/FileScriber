@@ -3,8 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-
-//using Print = System.Console;
 using Print = System.Diagnostics.Debug;
 
 namespace FileScriber
@@ -41,17 +39,17 @@ namespace FileScriber
 
                 Print.WriteLine(e.Message);
                 Print.WriteLine("(path: {0}", path);
-                throw e;
+                throw;
             }
         }
 
-        static public void Write<T>(string path, ICollection<T> contentToWrite, char separator = ' ', bool isNewLine = false)
+        static public void Write<T>(string path, ICollection<T> contentToWrite, string separator = " ", bool isNewLine = false)
         {
-            string stringVector = String.Join(separator.ToString(), contentToWrite);
+            string stringVector = string.Join(separator.ToString(), contentToWrite);
 
-            if ((separator == ',' || separator == '.')
+            if (separator.Contains(",") || separator.Contains(".")
                 && contentToWrite.Count > 0
-                && contentToWrite.First().GetType() == typeof(double))
+                && contentToWrite.First() is double)
             {
                 Print.WriteLine("Written text might no be parseable due to coincidence among element separators and number decimal separator ");
             }
@@ -100,7 +98,7 @@ namespace FileScriber
 
                 Print.WriteLine(e.Message);
                 Print.WriteLine("(path: {0}", path);
-                throw e;
+                throw;
             }
         }
     }
