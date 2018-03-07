@@ -19,7 +19,7 @@
   <Target Name="PrepareNugetPackage" DependsOnTargets="EnsureTrailingSlash">
     <Message Text="***Preparing Nuget Package***" Importance="high"></Message>
     <CallTarget Targets="Cleaning"></CallTarget>
-    <CallTarget Targets="ReplaceVersion" ContinueOnError="false"></CallTarget>
+    <Exec Command="dotnet msbuild /t:ReplaceVersion /p:VersionTag=$(VersionTag) /p:TargetFramework=netstandard2.0"></Exec>
     <CallTarget Targets="FreshBuilding" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="Tests" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="DotnetPublish" ContinueOnError="false"></CallTarget>
@@ -40,7 +40,7 @@
     <RemoveDir Directories=".\bin" Condition="Exists('.\bin')"></RemoveDir>
     <RemoveDir Directories=".\obj" Condition="Exists('.\obj')"></RemoveDir>
     <RemoveDir Directories=".\$(PublishDir)" Condition="Exists('.\$(PublishDir)')"></RemoveDir>
-    <Exec Command="dotnet restore"></Exec>
+    <Exec Command="dotnet restore --force"></Exec>
   </Target>
 
   <Target Name="FreshBuilding">
@@ -64,7 +64,7 @@
     <Exec Command ="dotnet pack -c Release FileScriber.csproj --no-build -o $(NugetPackagesDir)"></Exec>
   </Target>
 
-  <Target Name="ReplaceVersion" Condition="$(VersionTag) != ''" DependsOnTargets="Build">
+  <Target Name="ReplaceVersion" Condition="$(VersionTag) != '' AND $(TargetFramework)=='netstandard2.0'" DependsOnTargets="Build">
     <Message Text="***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
     <PropertyGroup>
       <ExistingVersionRegex>&lt;Version>.*&lt;/Version</ExistingVersionRegex>
