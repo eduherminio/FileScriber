@@ -43,7 +43,7 @@ namespace FileScriber
             }
         }
 
-        static public void Write<T>(string path, ICollection<T> contentToWrite, string separator = " ", bool isNewLine = false)
+        static public void Write<TCollection, TElement>(string path, TCollection contentToWrite, string separator = " ", bool isNewLine = false) where TCollection : ICollection<TElement>
         {
             string stringVector = string.Join(separator.ToString(), contentToWrite);
 
@@ -57,12 +57,12 @@ namespace FileScriber
             ScribeString(path, stringVector, isNewLine);
         }
 
-        static public void WriteLine<T>(string path, ICollection<T> contentToWrite, char separator = ' ')
+        static public void WriteLine<TCollection, TElement>(string path, TCollection contentToWrite, string separator = " ") where TCollection : ICollection<TElement>
         {
-            Write(path, contentToWrite, separator, true);
+            Write<TCollection, TElement>(path, contentToWrite, separator, true);
         }
 
-        static public void Write<T>(string path, T element, char separator = ' ', bool isNewLine = false)
+        static public void Write<T>(string path, T element, string separator = " ", bool isNewLine = false)
         {
             string stringSeparator = isNewLine == true
                 ? string.Empty
@@ -71,7 +71,7 @@ namespace FileScriber
             ScribeString(path, Convert.ToString(element) + stringSeparator, isNewLine);
         }
 
-        static public void WriteLine<T>(string path, T element, char separator = ' ')
+        static public void WriteLine<T>(string path, T element, string separator = " ")
         {
             Write<T>(path, element, separator, true);
         }

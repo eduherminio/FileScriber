@@ -95,9 +95,9 @@ namespace FileScriberTest
 
             ICollection<double> vectorToWrite = new List<double>() { 0.0, 1.1, 2.22, 3.33 };
             string textInFile = string.Empty;
-            char separator = '%';
+            string separator = "%";
 
-            Writer.WriteLine(path, vectorToWrite, separator);
+            Writer.WriteLine<ICollection<double>, double>(path, vectorToWrite, separator);
 
             StreamReader reader = new StreamReader(path);
 
@@ -110,7 +110,7 @@ namespace FileScriberTest
                 }
             }
 
-            List<double> vectorInFile = textInFile.Split(separator).Select(str => double.Parse(str.Trim())).ToList();
+            List<double> vectorInFile = textInFile.Split(separator.First()).Select(str => double.Parse(str.Trim())).ToList();
 
             Assert.Equal(vectorToWrite, vectorInFile);
         }
@@ -123,11 +123,11 @@ namespace FileScriberTest
 
             ICollection<string> vectorToWrite = new List<string>() { "string1", "string2", "string3", "string4" };
             string textInFile = string.Empty;
-            char separator = '$';
+            string separator = "$";
 
-            Writer.WriteLine(path, vectorToWrite, separator);
+            Writer.WriteLine<ICollection<string>, string>(path, vectorToWrite, separator);
 
-            IParsedFile file = new ParsedFile(path, new char[] { separator });
+            IParsedFile file = new ParsedFile(path, new char[] { separator.First() });
             while (!file.Empty)
             {
                 IParsedLine line = file.NextLine();
