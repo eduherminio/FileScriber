@@ -110,7 +110,7 @@ namespace FileScriberTest
                 }
             }
 
-            List<double> vectorInFile = textInFile.Split(separator.First()).Select(str => double.Parse(str.Trim())).ToList();
+            List<double> vectorInFile = textInFile.Split(separator.ToCharArray()).Select(str => double.Parse(str.Trim())).ToList();
 
             Assert.Equal(vectorToWrite, vectorInFile);
         }
@@ -127,7 +127,7 @@ namespace FileScriberTest
 
             Writer.WriteLine<ICollection<string>, string>(path, vectorToWrite, separator);
 
-            IParsedFile file = new ParsedFile(path, new char[] { separator.First() });
+            IParsedFile file = new ParsedFile(path, separator);
             while (!file.Empty)
             {
                 IParsedLine line = file.NextLine();
