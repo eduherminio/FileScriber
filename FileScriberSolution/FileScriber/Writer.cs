@@ -45,7 +45,7 @@ namespace FileScriber
 
         static public void Write<TCollection, TElement>(string path, TCollection contentToWrite, string separator = " ", bool isNewLine = false) where TCollection : ICollection<TElement>
         {
-            string stringVector = string.Join(separator.ToString(), contentToWrite);
+            string stringVector = string.Join(separator, contentToWrite);
 
             if (separator.Contains(",") || separator.Contains(".")
                 && contentToWrite.Count > 0
@@ -64,9 +64,9 @@ namespace FileScriber
 
         static public void Write<T>(string path, T element, string separator = " ", bool isNewLine = false)
         {
-            string stringSeparator = isNewLine == true
+            string stringSeparator = isNewLine
                 ? string.Empty
-                : separator.ToString();
+                : separator;
 
             ScribeString(path, Convert.ToString(element) + stringSeparator, isNewLine);
         }
@@ -75,7 +75,6 @@ namespace FileScriber
         {
             Write<T>(path, element, separator, true);
         }
-
 
         static private void ScribeString(string path, string textInFile, bool isWriteLine = false)
         {
